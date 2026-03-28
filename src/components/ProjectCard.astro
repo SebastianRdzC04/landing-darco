@@ -11,12 +11,13 @@ const { image, title, category, year } = Astro.props;
 
 <article class="group relative overflow-hidden cursor-pointer touch-manipulation">
   <!-- Image container - vertical aspect ratio -->
-  <div class="aspect-[3/4] sm:aspect-[4/5] overflow-hidden bg-neutral-100">
+  <div class="aspect-[3/4] sm:aspect-[4/5] overflow-hidden bg-neutral-100 w-full">
     <img 
       src={image} 
       alt={title}
-      class="w-full h-full object-cover object-center transition-transform duration-700 ease-out 
-             group-hover:scale-105 group-active:scale-105"
+      class="w-full h-full object-cover transition-transform duration-700 ease-out 
+             group-hover:scale-110 group-active:scale-110"
+      style="object-position: center 30%;"
       loading="lazy"
       decoding="async"
     />

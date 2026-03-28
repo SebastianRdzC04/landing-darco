@@ -42,10 +42,6 @@ html {
   overflow-x: hidden;
 }
 
-html, body {
-  height: 100%;
-}
-
 body {
   font-family: var(--font-body);
   background-color: rgb(var(--color-bg));
@@ -285,6 +281,11 @@ img {
   height: auto;
   /* Prevent layout shifts */
   content-visibility: auto;
+}
+
+/* Allow images with explicit height classes to override height: auto */
+img[class*="h-full"] {
+  height: 100%;
 }
 
 /* ========================================
