@@ -1,0 +1,161 @@
+---
+interface Props {
+  slides: string[];
+  interval?: number;
+  title?: string;
+  subtitle?: string;
+}
+
+const { 
+  slides, 
+  interval = 5000,
+  title = "Darco",
+  subtitle = "Construcciones"
+} = Astro.props;
+---
+
+<style>
+  .carousel-container {
+    position: relative;
+    height: 100vh;
+    height: 100dvh; /* Dynamic viewport height for mobile browsers */
+    min-height: 600px;
+    overflow: hidden;
+    background-size: cover;
+    background-position: center;
+    background-image: var(--bg-image);
+  }
+
+  /* Fix parallax for mobile - use scroll instead of fixed */
+  @media (max-width: 768px) {
+    .carousel-container {
+      background-attachment: scroll;
+      min-height: 100dvh;
+    }
+  }
+
+  @media (min-width: 769px) {
+    .carousel-container {
+      background-attachment: fixed;
+    }
+  }
+
+  .carousel-image-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    transition: opacity 1.2s ease-in-out;
+    pointer-events: none;
+  }
+
+  .carousel-image-layer.active {
+    opacity: 1;
+  }
+
+  /* Gradient overlay for better text readability on mobile */
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to bottom,
+      rgba(255,255,255,0.1) 0%,
+      rgba(255,255,255,0.4) 50%,
+      rgba(255,255,255,0.6) 100%
+    );
+    pointer-events: none;
+  }
+
+  @media (min-width: 768px) {
+    .hero-overlay {
+      background: linear-gradient(
+        to right,
+        rgba(255,255,255,0.5) 0%,
+        rgba(255,255,255,0.2) 50%,
+        transparent 100%
+      );
+    }
+  }
+</style>
+
+<section class="carousel-container" style={`--bg-image: url('${slides[0]}')`}>
+  <div class="carousel-image-layer" aria-hidden="true"></div>
+  <div class="hero-overlay"></div>
+
+  <!-- Carousel script for overlay fade animation -->
+  <script define:vars={{ slides, interval }}>
+    const container = document.querySelector('.carousel-container');
+    const imageLayer = document.querySelector('.carousel-image-layer');
+    let idx = 0;
+
+    const changeImage = () => {
+      idx = (idx + 1) % slides.length;
+      
+      // Set new image on overlay layer
+      imageLayer.style.backgroundImage = `url('${slides[idx]}')`;
+      
+      // Fade in the overlay
+      imageLayer.classList.add('active');
+
+      // After fade completes, move image to main background and reset overlay
+      setTimeout(() => {
+        container.style.setProperty('--bg-image', `url('${slides[idx]}')`);
+        imageLayer.classList.remove('active');
+      }, 1200);
+    };
+
+    setInterval(changeImage, interval);
+  </script>
+
+  <!-- Hero Content -->
+  <div class="relative z-10 flex h-full items-end pb-20 sm:items-center sm:pb-0">
+    <div class="w-full px-5 sm:px-6 md:px-12 lg:px-20">
+      <div class="max-w-4xl">
+        <!-- Title -->
+        <h1 class="font-display text-5xl xs:text-6xl sm:text-7xl md:text-8xl lg:text-9xl text-black leading-[0.85] tracking-tight">
+          {title}
+        </h1>
+        
+        <!-- Subtitle -->
+        <h2 class="font-display text-2xl xs:text-3xl sm:text-4xl md:text-5xl text-black/80 leading-none mt-1 sm:mt-2 tracking-tight">
+          {subtitle}
+        </h2>
+        
+        <!-- Tagline -->
+        <p class="mt-6 sm:mt-8 text-base sm:text-lg md:text-xl text-black/60 font-body font-light max-w-md sm:max-w-lg leading-relaxed">
+          Diseño arquitectónico que transforma espacios en experiencias.
+        </p>
+        
+        <!-- CTA -->
+        <div class="mt-8 sm:mt-10">
+          <a 
+            href="#projects" 
+            class="inline-flex items-center gap-2 sm:gap-3 text-black hover:opacity-70 transition-opacity group
+                   py-3 px-5 -ml-5 sm:p-0 sm:ml-0 active:bg-black/5 sm:active:bg-transparent rounded-lg"
+          >
+            <span class="text-xs sm:text-sm uppercase tracking-[0.15em] sm:tracking-[0.2em] font-body font-medium sm:font-normal">Ver proyectos</span>
+            <svg 
+              class="w-4 h-4 sm:w-5 sm:h-5 transform group-hover:translate-x-1 transition-transform" 
+              fill="none" 
+              stroke="currentColor" 
+              viewBox="0 0 24 24"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Scroll indicator - hidden on very small screens -->
+  <div class="absolute bottom-6 sm:bottom-8 left-1/2 -translate-x-1/2 animate-bounce hidden xs:block">
+    <svg class="w-5 h-5 sm:w-6 sm:h-6 text-black/40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+    </svg>
+  </div>
+</section>

@@ -1,0 +1,303 @@
+@import "tailwindcss";
+
+/* ========================================
+   DARCO CONSTRUCCIONES - Design System
+   ======================================== */
+
+:root {
+  /* Color Palette - Minimalista y elegante */
+  --color-primary: 23 23 23;        /* Negro carbón */
+  --color-secondary: 245 245 245;   /* Blanco humo */
+  --color-accent: 161 136 127;      /* Marrón cálido arquitectónico */
+  --color-muted: 115 115 115;       /* Gris neutro */
+  --color-bg: 255 255 255;          /* Blanco puro */
+  --color-text: 23 23 23;           /* Negro carbón */
+  --color-surface: 250 250 250;     /* Superficie clara */
+  
+  /* Typography */
+  --font-display: 'Cormorant Garamond', serif;
+  --font-body: 'Inter', sans-serif;
+  
+  /* Spacing scale */
+  --space-xs: 0.5rem;
+  --space-sm: 1rem;
+  --space-md: 1.5rem;
+  --space-lg: 2rem;
+  --space-xl: 3rem;
+  --space-2xl: 5rem;
+  
+  /* Transitions */
+  --transition-fast: 150ms ease;
+  --transition-base: 300ms ease;
+  --transition-slow: 500ms ease;
+}
+
+/* ========================================
+   Base Styles
+   ======================================== */
+
+html {
+  scroll-behavior: smooth;
+  /* Prevent horizontal scroll */
+  overflow-x: hidden;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: rgb(var(--color-bg));
+  color: rgb(var(--color-text));
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: 1.6;
+  /* Prevent horizontal scroll */
+  overflow-x: hidden;
+  /* Improve text rendering on mobile */
+  text-rendering: optimizeLegibility;
+}
+
+/* ========================================
+   Typography Utilities
+   ======================================== */
+
+.font-display {
+  font-family: var(--font-display);
+}
+
+.font-body {
+  font-family: var(--font-body);
+}
+
+/* Headings with display font */
+h1, h2, h3 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+}
+
+/* ========================================
+   Mobile-Optimized Touch & Interactions
+   ======================================== */
+
+/* Better touch targets */
+.touch-manipulation {
+  touch-action: manipulation;
+}
+
+/* Remove tap highlight on mobile */
+a, button {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Smooth image transitions */
+img {
+  transition: transform var(--transition-slow), opacity var(--transition-base);
+}
+
+/* ========================================
+   Focus States for Accessibility
+   ======================================== */
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid rgb(var(--color-accent));
+  outline-offset: 2px;
+}
+
+/* Remove default focus on mobile touch */
+@media (hover: none) {
+  a:focus:not(:focus-visible),
+  button:focus:not(:focus-visible) {
+    outline: none;
+  }
+}
+
+/* ========================================
+   Selection & Scrollbar
+   ======================================== */
+
+::selection {
+  background-color: rgb(var(--color-accent) / 0.3);
+  color: rgb(var(--color-text));
+}
+
+/* Custom scrollbar - hidden on mobile */
+@media (min-width: 768px) {
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: rgb(var(--color-secondary));
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: rgb(var(--color-muted));
+    border-radius: 4px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgb(var(--color-primary));
+  }
+}
+
+/* ========================================
+   Animation Utilities
+   ======================================== */
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { 
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to { 
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.6s ease forwards;
+}
+
+.animate-slide-up {
+  animation: slideUp 0.8s ease forwards;
+}
+
+.animate-slide-in-right {
+  animation: slideInRight 0.5s ease forwards;
+}
+
+/* Reduce motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* Stagger animation delays */
+.delay-100 { animation-delay: 100ms; }
+.delay-200 { animation-delay: 200ms; }
+.delay-300 { animation-delay: 300ms; }
+.delay-400 { animation-delay: 400ms; }
+
+/* ========================================
+   Responsive Typography Scale
+   ======================================== */
+
+/* Fluid typography for better mobile scaling */
+@media (max-width: 640px) {
+  html {
+    font-size: 15px;
+  }
+}
+
+/* ========================================
+   Safe Area Insets (for notched devices)
+   ======================================== */
+
+@supports (padding: max(0px)) {
+  body {
+    padding-left: max(0px, env(safe-area-inset-left));
+    padding-right: max(0px, env(safe-area-inset-right));
+  }
+  
+  /* Footer needs bottom safe area */
+  footer {
+    padding-bottom: max(2rem, env(safe-area-inset-bottom));
+  }
+}
+
+/* ========================================
+   Extra Small Breakpoint (xs: 480px)
+   ======================================== */
+
+@media (min-width: 480px) {
+  .xs\:block { display: block; }
+  .xs\:hidden { display: none; }
+  .xs\:text-6xl { font-size: 3.75rem; }
+  .xs\:text-3xl { font-size: 1.875rem; }
+}
+
+/* ========================================
+   Carousel Helpers
+   ======================================== */
+
+.carousel-slide {
+  will-change: opacity;
+}
+
+/* ========================================
+   Form Improvements for Mobile
+   ======================================== */
+
+/* Prevent zoom on input focus in iOS */
+@media (max-width: 768px) {
+  input[type="text"],
+  input[type="email"],
+  input[type="tel"],
+  textarea,
+  select {
+    font-size: 16px !important;
+  }
+}
+
+/* Better placeholder styling */
+::placeholder {
+  opacity: 0.5;
+}
+
+/* ========================================
+   Image Optimization
+   ======================================== */
+
+img {
+  max-width: 100%;
+  height: auto;
+  /* Prevent layout shifts */
+  content-visibility: auto;
+}
+
+/* ========================================
+   Print Styles
+   ======================================== */
+
+@media print {
+  .no-print {
+    display: none !important;
+  }
+  
+  body {
+    background: white;
+    color: black;
+  }
+}

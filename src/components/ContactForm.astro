@@ -1,0 +1,89 @@
+---
+---
+
+<form class="space-y-5 sm:space-y-6">
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-6">
+    <div class="space-y-1.5 sm:space-y-2">
+      <label for="name" class="block text-xs sm:text-sm uppercase tracking-[0.08em] sm:tracking-[0.1em] text-muted font-body">
+        Nombre
+      </label>
+      <input
+        type="text"
+        id="name"
+        name="name"
+        placeholder="Tu nombre"
+        required
+        class="w-full px-0 py-3 bg-transparent border-b border-muted/30 text-sm sm:text-base text-text placeholder-muted/50 
+               focus:outline-none focus:border-primary transition-colors duration-300
+               font-body"
+      />
+    </div>
+    <div class="space-y-1.5 sm:space-y-2">
+      <label for="email" class="block text-xs sm:text-sm uppercase tracking-[0.08em] sm:tracking-[0.1em] text-muted font-body">
+        Email
+      </label>
+      <input
+        type="email"
+        id="email"
+        name="email"
+        placeholder="tu@email.com"
+        required
+        class="w-full px-0 py-3 bg-transparent border-b border-muted/30 text-sm sm:text-base text-text placeholder-muted/50 
+               focus:outline-none focus:border-primary transition-colors duration-300
+               font-body"
+      />
+    </div>
+  </div>
+  
+  <div class="space-y-1.5 sm:space-y-2">
+    <label for="subject" class="block text-xs sm:text-sm uppercase tracking-[0.08em] sm:tracking-[0.1em] text-muted font-body">
+      Asunto
+    </label>
+    <input
+      type="text"
+      id="subject"
+      name="subject"
+      placeholder="¿En qué podemos ayudarte?"
+      class="w-full px-0 py-3 bg-transparent border-b border-muted/30 text-sm sm:text-base text-text placeholder-muted/50 
+             focus:outline-none focus:border-primary transition-colors duration-300
+             font-body"
+    />
+  </div>
+  
+  <div class="space-y-1.5 sm:space-y-2">
+    <label for="message" class="block text-xs sm:text-sm uppercase tracking-[0.08em] sm:tracking-[0.1em] text-muted font-body">
+      Mensaje
+    </label>
+    <textarea
+      id="message"
+      name="message"
+      placeholder="Cuéntanos sobre tu proyecto..."
+      rows="4"
+      required
+      class="w-full px-3 sm:px-4 py-3 bg-transparent border border-muted/30 rounded-sm 
+             text-sm sm:text-base text-text placeholder-muted/50 
+             focus:outline-none focus:border-primary transition-colors duration-300
+             font-body resize-none"
+    ></textarea>
+  </div>
+  
+  <button
+    type="submit"
+    class="group w-full sm:w-auto inline-flex items-center justify-center gap-2 sm:gap-3 
+           px-6 sm:px-8 py-3.5 sm:py-4 bg-primary text-white 
+           font-body text-xs sm:text-sm uppercase tracking-[0.12em] sm:tracking-[0.15em]
+           hover:bg-accent active:bg-accent transition-all duration-300
+           focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2
+           touch-manipulation"
+  >
+    <span>Enviar Mensaje</span>
+    <svg 
+      class="w-4 h-4 transform group-hover:translate-x-1 transition-transform" 
+      fill="none" 
+      stroke="currentColor" 
+      viewBox="0 0 24 24"
+    >
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+    </svg>
+  </button>
+</form>

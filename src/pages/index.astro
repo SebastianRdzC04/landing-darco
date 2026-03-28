@@ -1,17 +1,110 @@
 ---
+import Layout from "../layouts/Layout.astro";
+import HeroSection from "../components/HeroSection.astro";
+import AboutSection from "../components/AboutSection.astro";
+import AboutCard from "../components/AboutCard.astro";
+import ProjectsSection from "../components/ProjectsSection.astro";
+import ContactSection from "../components/ContactSection.astro";
+import ContactForm from "../components/ContactForm.astro";
 
+// Carousel images
+const carouselSlides = ['/CM1.webp', '/imagen2.jpg', '/imagen4.webp', '/fondo-puesto-comida.png'];
+
+// About section content
+const aboutTitle = "La arquitectura como filosofía";
+const aboutSubtitle = "Diseñar es pensar en la vida que ocurrirá en un lugar: su luz, su memoria y su relación con el entorno. Buscamos soluciones que sean a la vez funcionales, duraderas y poéticas.";
+
+// Projects data
+const projects = [
+  {
+    image: '/CM1.webp',
+    title: 'Casa Montaña',
+    category: 'Residencial',
+    year: '2024'
+  },
+  {
+    image: '/imagen2.jpg',
+    title: 'Edificio Aurora',
+    category: 'Comercial',
+    year: '2023'
+  },
+  {
+    image: '/imagen4.webp',
+    title: 'Loft Industrial',
+    category: 'Renovación',
+    year: '2023'
+  },
+  {
+    image: '/fondo-puesto-comida.png',
+    title: 'Plaza Gastronómica',
+    category: 'Comercial',
+    year: '2022'
+  },
+  {
+    image: '/CM1.webp',
+    title: 'Villa Serena',
+    category: 'Residencial',
+    year: '2022'
+  },
+  {
+    image: '/imagen2.jpg',
+    title: 'Centro Cultural',
+    category: 'Institucional',
+    year: '2021'
+  }
+];
+
+// Contact section content
+const contactEmail = "info@darcoconstrucciones.com";
+const contactPhone = "+57 (1) 234-5678";
+const contactAddress = "Calle Principal 123\nBogotá, Colombia";
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<Layout title="Darco Construcciones">
+  <!-- Hero with Carousel -->
+  <HeroSection slides={carouselSlides}>
+    Darco Construcciones
+  </HeroSection>
+
+  <!-- About Section -->
+  <AboutSection 
+    title={aboutTitle}
+    subtitle={aboutSubtitle}
+  >
+    <AboutCard>
+      <Fragment slot="title">Misión</Fragment>
+      <Fragment slot="content">
+        Nuestra misión es acompañar a cada proyecto desde la idea hasta la
+        entrega, combinando rigor técnico y sensibilidad espacial. Trabajamos
+        con clientes para crear edificios y espacios que mejoren la calidad de
+        vida y respeten el contexto.
+      </Fragment>
+    </AboutCard>
+
+    <AboutCard>
+      <Fragment slot="title">Qué hacemos</Fragment>
+      <Fragment slot="content">
+        Ofrecemos servicios de diseño arquitectónico, gestión de proyectos,
+        dirección de obra y renovación. Cada encargo se aborda con un proceso
+        a medida: estudio del sitio, propuesta conceptual, documentación
+        técnica y acompañamiento en obra.
+      </Fragment>
+    </AboutCard>
+  </AboutSection>
+
+  <!-- Projects Section -->
+  <ProjectsSection 
+    title="Proyectos"
+    subtitle="Una selección de nuestros trabajos más destacados en arquitectura y construcción"
+    projects={projects}
+  />
+
+  <!-- Contact Section -->
+  <ContactSection
+    email={contactEmail}
+    phone={contactPhone}
+    address={contactAddress}
+  >
+    <ContactForm />
+  </ContactSection>
+</Layout>
