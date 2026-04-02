@@ -4,12 +4,21 @@ interface Props {
   title: string;
   category: string;
   year?: string;
+  href?: string;
 }
 
-const { image, title, category, year } = Astro.props;
+const { image, title, category, year, href } = Astro.props;
+
+const Tag = href ? 'a' : 'article';
 ---
 
-<article class="group relative overflow-hidden cursor-pointer touch-manipulation">
+<Tag
+  href={href}
+  class:list={[
+    "group relative overflow-hidden touch-manipulation block",
+    href && "cursor-pointer"
+  ]}
+>
   <!-- Image container - vertical aspect ratio -->
   <div class="aspect-[3/4] sm:aspect-[4/5] overflow-hidden bg-neutral-100 w-full">
     <img 
@@ -36,6 +45,14 @@ const { image, title, category, year } = Astro.props;
       </span>
       <h3 class="text-white text-lg md:text-xl lg:text-2xl font-display mt-1">{title}</h3>
       {year && <span class="text-white/60 text-xs md:text-sm mt-2 block">{year}</span>}
+      {href && (
+        <span class="inline-flex items-center gap-1.5 text-white/80 text-xs uppercase tracking-wider mt-3 font-body">
+          Ver proyecto
+          <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+          </svg>
+        </span>
+      )}
     </div>
     
     <!-- Mobile always-visible content -->
@@ -46,7 +63,7 @@ const { image, title, category, year } = Astro.props;
       <h3 class="text-white text-sm font-display mt-0.5 leading-tight line-clamp-2">{title}</h3>
     </div>
   </div>
-</article>
+</Tag>
 
 <style>
   /* Line clamp for long titles on mobile */
