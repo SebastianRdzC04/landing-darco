@@ -1,15 +1,18 @@
 ---
-title: Edificio Aurora
-slug: edificio-aurora
+title: Centro Comercial
+slug: centro-comercial
 excerpt: Torre de uso mixto de 12 niveles con jardín elevado en el centro de Bogotá.
 category: Comercial
 year: "2023"
 location: Centro Financiero, Bogotá
 client: Grupo Inversiones Aurora S.A.S
-coverImage: ./cover.jpg
+coverImage: ./images/c-comercial1.jpeg
 gallery:
-  - ./gallery-1.png
-  - ./gallery-2.webp
+  - ./images/c-comercial2.jpeg
+  - ./images/c-comercial3.jpeg
+  - ./images/c-comercial4.jpeg
+  - ./images/c-comercial5.jpeg
+  - ./images/c-comercial6.jpeg
 ---
 
 ## Visión urbana

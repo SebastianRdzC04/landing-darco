@@ -279,8 +279,6 @@ textarea:focus-visible {
 img {
   max-width: 100%;
   height: auto;
-  /* Prevent layout shifts */
-  content-visibility: auto;
 }
 
 /* Allow images with explicit height classes to override height: auto */

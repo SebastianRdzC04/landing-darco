@@ -13,7 +13,7 @@ const isHomePage = pathname === "/" || pathname === "/index.html";
 const base = isHomePage ? "" : "/";
 
 const navLinks = [
-  { href: isHomePage ? "/" : "/", label: "Inicio", isHome: true },
+  { href: "/",               label: "Inicio"    },
   { href: `${base}#projects`, label: "Proyectos" },
   { href: `${base}#about`,    label: "Nosotros"  },
   { href: `${base}#contact`,  label: "Contacto"  },
@@ -36,7 +36,7 @@ const darkHero = !isHomePage;
   >
     <!-- Logo -->
     <a
-      href={isHomePage ? "/" : "/"}
+      href="/"
       class="font-display text-lg sm:text-xl tracking-wide hover:opacity-70 transition-opacity"
     >
       {siteName}
@@ -61,7 +61,7 @@ const darkHero = !isHomePage;
     <!-- Mobile Menu Button -->
     <button
       id="mobile-menu-btn"
-      class="md:hidden p-2 -mr-2 relative z-50 touch-manipulation"
+      class="md:hidden p-2 -mr-2 touch-manipulation"
       aria-label="Abrir menú"
       aria-expanded="false"
     >
@@ -81,188 +81,200 @@ const darkHero = !isHomePage;
       </div>
     </button>
   </nav>
+</header>
 
-  <!-- Mobile Menu Overlay -->
-  <div
-    id="mobile-menu-overlay"
-    class="fixed inset-0 bg-black/20 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300 md:hidden"
-    aria-hidden="true"
-  ></div>
+<!--
+  Overlay y panel FUERA del <header>.
+  Elementos fixed dentro de un padre fixed tienen comportamiento errático
+  en iOS Safari (no reciben eventos táctiles, se esconden, etc.).
+  Al ser hermanos del header en el DOM quedan en el stacking context raíz
+  y responden correctamente en todos los dispositivos.
+-->
 
-  <!-- Mobile Menu Panel -->
-  <div
-    id="mobile-menu"
-    class="fixed inset-y-0 right-0 w-full max-w-sm bg-white shadow-2xl
-           transform translate-x-full transition-transform duration-300 ease-out
-           md:hidden flex flex-col text-primary"
-  >
-    <!-- Menu Header -->
-    <div class="flex items-center justify-between px-5 py-4 border-b border-neutral-100">
-      <span class="font-display text-lg tracking-wide">{siteName}</span>
-      <button
-        id="mobile-menu-close"
-        class="p-2 -mr-2 touch-manipulation"
-        aria-label="Cerrar menú"
-      >
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12" />
-        </svg>
-      </button>
-    </div>
+<!-- Mobile Menu Overlay -->
+<div
+  id="mobile-menu-overlay"
+  class="fixed inset-0 bg-black/20 backdrop-blur-sm
+         opacity-0 pointer-events-none
+         transition-opacity duration-300
+         md:hidden z-[60]"
+  aria-hidden="true"
+></div>
 
-    <!-- Menu Links -->
-    <nav class="flex-1 overflow-y-auto py-8">
-      <ul class="flex flex-col px-5">
-        {
-          navLinks.map((link, index) => (
-            <li class="border-b border-neutral-100 last:border-b-0">
-              <a
-                href={link.href}
-                class="mobile-menu-link flex items-center justify-between py-5 text-lg font-display tracking-wide
-                       hover:text-accent active:text-accent transition-colors touch-manipulation"
-                style={`--delay: ${index * 50}ms`}
-              >
-                <span>{link.label}</span>
-                <svg
-                  class="w-5 h-5 text-neutral-300"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5l7 7-7 7" />
-                </svg>
-              </a>
-            </li>
-          ))
-        }
-      </ul>
-    </nav>
-
-    <!-- Menu Footer -->
-    <div class="px-5 py-6 border-t border-neutral-100 bg-neutral-50">
-      <a
-        href={`${base}#contact`}
-        class="mobile-menu-link flex items-center justify-center gap-2 w-full py-4 bg-primary text-white
-               font-body text-sm uppercase tracking-[0.15em] active:bg-accent transition-colors touch-manipulation"
-      >
-        <span>Contactar</span>
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-        </svg>
-      </a>
-    </div>
+<!-- Mobile Menu Panel -->
+<div
+  id="mobile-menu"
+  class="fixed inset-y-0 right-0 w-full max-w-sm bg-white shadow-2xl
+         translate-x-full transition-transform duration-300 ease-out
+         md:hidden flex flex-col text-primary z-[70]"
+>
+  <!-- Menu Header -->
+  <div class="flex items-center justify-between px-5 py-4 border-b border-neutral-100">
+    <span class="font-display text-lg tracking-wide">{siteName}</span>
+    <button
+      id="mobile-menu-close"
+      class="p-2 -mr-2 touch-manipulation"
+      aria-label="Cerrar menú"
+    >
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12" />
+      </svg>
+    </button>
   </div>
 
-  <style>
-    /* Hamburger → X animation */
-    .menu-open #menu-line-1 { transform: translateY(4px) rotate(45deg); }
-    .menu-open #menu-line-2 { opacity: 0; }
-    .menu-open #menu-line-3 { transform: translateY(-4px) rotate(-45deg); }
+  <!-- Menu Links -->
+  <nav class="flex-1 overflow-y-auto py-8">
+    <ul class="flex flex-col px-5">
+      {
+        navLinks.map((link, index) => (
+          <li class="border-b border-neutral-100 last:border-b-0">
+            <a
+              href={link.href}
+              class="mobile-menu-link flex items-center justify-between py-5 text-lg font-display tracking-wide
+                     hover:text-accent active:text-accent transition-colors touch-manipulation"
+              style={`--delay: ${index * 50}ms`}
+            >
+              <span>{link.label}</span>
+              <svg
+                class="w-5 h-5 text-neutral-300"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5l7 7-7 7" />
+              </svg>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </nav>
 
-    /* Slide-in animation for mobile menu links */
-    .mobile-menu-link {
-      opacity: 0;
-      transform: translateX(20px);
-      transition:
-        opacity 0.3s ease,
-        transform 0.3s ease,
-        color 0.2s ease;
-      transition-delay: var(--delay, 0ms);
-    }
+  <!-- Menu Footer -->
+  <div class="px-5 py-6 border-t border-neutral-100 bg-neutral-50">
+    <a
+      href={`${base}#contact`}
+      class="mobile-menu-link flex items-center justify-center gap-2 w-full py-4 bg-primary text-white
+             font-body text-sm uppercase tracking-[0.15em] active:bg-accent transition-colors touch-manipulation"
+    >
+      <span>Contactar</span>
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+      </svg>
+    </a>
+  </div>
+</div>
 
-    #mobile-menu.menu-visible .mobile-menu-link {
-      opacity: 1;
-      transform: translateX(0);
-    }
-  </style>
+<style>
+  /* Hamburger → X animation */
+  .menu-open #menu-line-1 { transform: translateY(4px) rotate(45deg); }
+  .menu-open #menu-line-2 { opacity: 0; }
+  .menu-open #menu-line-3 { transform: translateY(-4px) rotate(-45deg); }
 
-  <script>
-    // ─── Mobile menu ───────────────────────────────────────────────────────────
-    const mobileMenuBtn     = document.getElementById("mobile-menu-btn");
-    const mobileMenuClose   = document.getElementById("mobile-menu-close");
-    const mobileMenu        = document.getElementById("mobile-menu");
-    const mobileMenuOverlay = document.getElementById("mobile-menu-overlay");
+  /* Slide-in animation para los links del menú móvil */
+  .mobile-menu-link {
+    opacity: 0;
+    transform: translateX(20px);
+    transition:
+      opacity 0.3s ease,
+      transform 0.3s ease,
+      color 0.2s ease;
+    transition-delay: var(--delay, 0ms);
+  }
 
-    let isMenuOpen = false;
+  #mobile-menu.menu-visible .mobile-menu-link {
+    opacity: 1;
+    transform: translateX(0);
+  }
+</style>
+
+<script>
+  // ─── Mobile menu ───────────────────────────────────────────────────────────
+  function initMobileMenu() {
+    const btn     = document.getElementById("mobile-menu-btn");
+    const close   = document.getElementById("mobile-menu-close");
+    const menu    = document.getElementById("mobile-menu");
+    const overlay = document.getElementById("mobile-menu-overlay");
+
+    if (!btn || !menu || !overlay) return;
+
+    let open = false;
 
     function openMenu() {
-      isMenuOpen = true;
-      mobileMenu?.classList.remove("translate-x-full");
-      mobileMenu?.classList.add("translate-x-0", "menu-visible");
-      mobileMenuOverlay?.classList.remove("opacity-0", "pointer-events-none");
-      mobileMenuOverlay?.classList.add("opacity-100", "pointer-events-auto");
-      mobileMenuBtn?.classList.add("menu-open");
-      mobileMenuBtn?.setAttribute("aria-expanded", "true");
+      open = true;
+      menu.classList.remove("translate-x-full");
+      menu.classList.add("translate-x-0", "menu-visible");
+      overlay.classList.remove("opacity-0", "pointer-events-none");
+      overlay.classList.add("opacity-100", "pointer-events-auto");
+      btn.classList.add("menu-open");
+      btn.setAttribute("aria-expanded", "true");
       document.body.style.overflow = "hidden";
     }
 
     function closeMenu() {
-      isMenuOpen = false;
-      mobileMenu?.classList.add("translate-x-full");
-      mobileMenu?.classList.remove("translate-x-0", "menu-visible");
-      mobileMenuOverlay?.classList.add("opacity-0", "pointer-events-none");
-      mobileMenuOverlay?.classList.remove("opacity-100", "pointer-events-auto");
-      mobileMenuBtn?.classList.remove("menu-open");
-      mobileMenuBtn?.setAttribute("aria-expanded", "false");
+      open = false;
+      menu.classList.add("translate-x-full");
+      menu.classList.remove("translate-x-0", "menu-visible");
+      overlay.classList.add("opacity-0", "pointer-events-none");
+      overlay.classList.remove("opacity-100", "pointer-events-auto");
+      btn.classList.remove("menu-open");
+      btn.setAttribute("aria-expanded", "false");
       document.body.style.overflow = "";
     }
 
-    mobileMenuBtn?.addEventListener("click", () => isMenuOpen ? closeMenu() : openMenu());
-    mobileMenuClose?.addEventListener("click", closeMenu);
-    mobileMenuOverlay?.addEventListener("click", closeMenu);
-    mobileMenu?.querySelectorAll("a").forEach((link) => link.addEventListener("click", closeMenu));
+    btn.addEventListener("click", () => (open ? closeMenu() : openMenu()));
+    close?.addEventListener("click", closeMenu);
+    overlay.addEventListener("click", closeMenu);
+    menu.querySelectorAll("a").forEach((link) => link.addEventListener("click", closeMenu));
 
     document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape" && isMenuOpen) closeMenu();
+      if (e.key === "Escape" && open) closeMenu();
     });
 
     window.addEventListener("resize", () => {
-      if (window.innerWidth >= 768 && isMenuOpen) closeMenu();
+      if (window.innerWidth >= 768 && open) closeMenu();
     });
-  </script>
+  }
 
-  <script is:inline>
-    function setupScroll() {
-      const header = document.getElementById("site-header");
-      if (!header) return;
+  // Ejecutar en carga inicial y en navegaciones con View Transitions (si se añaden)
+  initMobileMenu();
+  document.addEventListener("astro:page-load", initMobileMenu);
+</script>
 
-      const darkHero = header.getAttribute("data-dark-hero") === "true";
+<script is:inline>
+  function setupScroll() {
+    const header = document.getElementById("site-header");
+    if (!header) return;
 
-      // Umbral: en páginas de proyecto esperamos hasta la mitad del hero (50vh)
-      // En homepage basta con 50px para dar feedback al usuario
-      const threshold = darkHero ? window.innerHeight * 0.5 : 50;
+    const darkHero = header.getAttribute("data-dark-hero") === "true";
 
-      function handleScroll() {
-        const past = window.scrollY > threshold;
+    // Umbral: en páginas de proyecto esperamos hasta la mitad del hero (50vh)
+    // En homepage basta con 50px para dar feedback al usuario
+    const threshold = darkHero ? window.innerHeight * 0.5 : 50;
 
-        if (past) {
-          // Fondo blanco opaco + texto oscuro → legible sobre cualquier sección
-          header.classList.add("bg-white", "shadow-sm");
-          header.classList.remove("bg-black/20", "backdrop-blur-xl", "text-white");
-        } else {
-          header.classList.remove("bg-white", "shadow-sm");
+    function handleScroll() {
+      const past = window.scrollY > threshold;
 
-          if (darkHero) {
-            // Hero oscuro: volvemos a texto blanco al subir de nuevo
-            header.classList.add("text-white");
-            header.classList.remove("bg-black/20", "backdrop-blur-xl");
-          } else {
-            // Hero claro (homepage): leve fondo oscuro blur al hacer scroll mínimo
-            // → ya limpiado arriba, no añadimos nada extra
-          }
+      if (past) {
+        header.classList.add("bg-white", "shadow-sm");
+        header.classList.remove("text-white");
+      } else {
+        header.classList.remove("bg-white", "shadow-sm");
+        if (darkHero) {
+          header.classList.add("text-white");
         }
       }
-
-      window.addEventListener("scroll", handleScroll, { passive: true });
-      handleScroll();
     }
 
-    if (document.readyState === "loading") {
-      document.addEventListener("DOMContentLoaded", setupScroll);
-    } else {
-      setupScroll();
-    }
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll();
+  }
 
-    document.addEventListener("astro:page-load", setupScroll);
-  </script>
-</header>
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", setupScroll);
+  } else {
+    setupScroll();
+  }
+
+  document.addEventListener("astro:page-load", setupScroll);
+</script>
