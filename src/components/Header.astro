@@ -3,7 +3,7 @@ interface Props {
   siteName?: string;
 }
 
-const { siteName = "DARCO" } = Astro.props;
+const { siteName = "CARDOS" } = Astro.props;
 
 const pathname = Astro.url.pathname;
 const isHomePage = pathname === "/" || pathname === "/index.html";
@@ -13,10 +13,10 @@ const isHomePage = pathname === "/" || pathname === "/index.html";
 const base = isHomePage ? "" : "/";
 
 const navLinks = [
-  { href: "/",               label: "Inicio"    },
+  { href: "/", label: "Inicio" },
   { href: `${base}#projects`, label: "Proyectos" },
-  { href: `${base}#about`,    label: "Nosotros"  },
-  { href: `${base}#contact`,  label: "Contacto"  },
+  { href: `${base}#about`, label: "Nosotros" },
+  { href: `${base}#contact`, label: "Contacto" },
 ];
 
 // Páginas con hero oscuro necesitan texto blanco inicial en el header
@@ -72,8 +72,7 @@ const darkHero = !isHomePage;
         ></span>
         <span
           id="menu-line-2"
-          class="block w-5 h-0.5 bg-current transition-all duration-300"
-        ></span>
+          class="block w-5 h-0.5 bg-current transition-all duration-300"></span>
         <span
           id="menu-line-3"
           class="block w-5 h-0.5 bg-current transition-all duration-300 origin-center"
@@ -99,7 +98,8 @@ const darkHero = !isHomePage;
          transition-opacity duration-300
          md:hidden z-[60]"
   aria-hidden="true"
-></div>
+>
+</div>
 
 <!-- Mobile Menu Panel -->
 <div
@@ -109,15 +109,26 @@ const darkHero = !isHomePage;
          md:hidden flex flex-col text-primary z-[70]"
 >
   <!-- Menu Header -->
-  <div class="flex items-center justify-between px-5 py-4 border-b border-neutral-100">
+  <div
+    class="flex items-center justify-between px-5 py-4 border-b border-neutral-100"
+  >
     <span class="font-display text-lg tracking-wide">{siteName}</span>
     <button
       id="mobile-menu-close"
       class="p-2 -mr-2 touch-manipulation"
       aria-label="Cerrar menú"
     >
-      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12" />
+      <svg
+        class="w-6 h-6"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="1.5"
+          d="M6 18L18 6M6 6l12 12"></path>
       </svg>
     </button>
   </div>
@@ -141,7 +152,12 @@ const darkHero = !isHomePage;
                 stroke="currentColor"
                 viewBox="0 0 24 24"
               >
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5l7 7-7 7" />
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="1.5"
+                  d="M9 5l7 7-7 7"
+                />
               </svg>
             </a>
           </li>
@@ -158,8 +174,17 @@ const darkHero = !isHomePage;
              font-body text-sm uppercase tracking-[0.15em] active:bg-accent transition-colors touch-manipulation"
     >
       <span>Contactar</span>
-      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+      <svg
+        class="w-4 h-4"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
       </svg>
     </a>
   </div>
@@ -167,9 +192,15 @@ const darkHero = !isHomePage;
 
 <style>
   /* Hamburger → X animation */
-  .menu-open #menu-line-1 { transform: translateY(4px) rotate(45deg); }
-  .menu-open #menu-line-2 { opacity: 0; }
-  .menu-open #menu-line-3 { transform: translateY(-4px) rotate(-45deg); }
+  .menu-open #menu-line-1 {
+    transform: translateY(4px) rotate(45deg);
+  }
+  .menu-open #menu-line-2 {
+    opacity: 0;
+  }
+  .menu-open #menu-line-3 {
+    transform: translateY(-4px) rotate(-45deg);
+  }
 
   /* Slide-in animation para los links del menú móvil */
   .mobile-menu-link {
@@ -191,9 +222,9 @@ const darkHero = !isHomePage;
 <script>
   // ─── Mobile menu ───────────────────────────────────────────────────────────
   function initMobileMenu() {
-    const btn     = document.getElementById("mobile-menu-btn");
-    const close   = document.getElementById("mobile-menu-close");
-    const menu    = document.getElementById("mobile-menu");
+    const btn = document.getElementById("mobile-menu-btn");
+    const close = document.getElementById("mobile-menu-close");
+    const menu = document.getElementById("mobile-menu");
     const overlay = document.getElementById("mobile-menu-overlay");
 
     if (!btn || !menu || !overlay) return;
@@ -225,7 +256,9 @@ const darkHero = !isHomePage;
     btn.addEventListener("click", () => (open ? closeMenu() : openMenu()));
     close?.addEventListener("click", closeMenu);
     overlay.addEventListener("click", closeMenu);
-    menu.querySelectorAll("a").forEach((link) => link.addEventListener("click", closeMenu));
+    menu
+      .querySelectorAll("a")
+      .forEach((link) => link.addEventListener("click", closeMenu));
 
     document.addEventListener("keydown", (e) => {
       if (e.key === "Escape" && open) closeMenu();
