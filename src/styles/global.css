@@ -15,7 +15,7 @@
   --color-surface: 250 250 250;     /* Superficie clara */
   
   /* Typography */
-  --font-display: 'Cormorant Garamond', serif;
+  --font-display: 'Inter', sans-serif;
   --font-body: 'Inter', sans-serif;
   
   /* Spacing scale */
