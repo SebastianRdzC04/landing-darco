@@ -1,23 +1,23 @@
 @import "tailwindcss";
 
 /* ========================================
-   DARCO CONSTRUCCIONES - Design System
+   CARDOS CONSTRUCCIONES - Design System
    ======================================== */
 
 :root {
   /* Color Palette - Minimalista y elegante */
-  --color-primary: 23 23 23;        /* Negro carbón */
-  --color-secondary: 245 245 245;   /* Blanco humo */
-  --color-accent: 161 136 127;      /* Marrón cálido arquitectónico */
-  --color-muted: 115 115 115;       /* Gris neutro */
-  --color-bg: 255 255 255;          /* Blanco puro */
-  --color-text: 23 23 23;           /* Negro carbón */
-  --color-surface: 250 250 250;     /* Superficie clara */
-  
+  --color-primary: 23 23 23; /* Negro carbón */
+  --color-secondary: 245 245 245; /* Blanco humo */
+  --color-accent: 161 136 127; /* Marrón cálido arquitectónico */
+  --color-muted: 115 115 115; /* Gris neutro */
+  --color-bg: 255 255 255; /* Blanco puro */
+  --color-text: 23 23 23; /* Negro carbón */
+  --color-surface: 250 250 250; /* Superficie clara */
+
   /* Typography */
-  --font-display: 'Inter', sans-serif;
-  --font-body: 'Inter', sans-serif;
-  
+  --font-display: "Inter", sans-serif;
+  --font-body: "Inter", sans-serif;
+
   /* Spacing scale */
   --space-xs: 0.5rem;
   --space-sm: 1rem;
@@ -25,7 +25,7 @@
   --space-lg: 2rem;
   --space-xl: 3rem;
   --space-2xl: 5rem;
-  
+
   /* Transitions */
   --transition-fast: 150ms ease;
   --transition-base: 300ms ease;
@@ -68,7 +68,9 @@ body {
 }
 
 /* Headings with display font */
-h1, h2, h3 {
+h1,
+h2,
+h3 {
   font-family: var(--font-display);
   font-weight: 500;
   letter-spacing: -0.02em;
@@ -84,13 +86,16 @@ h1, h2, h3 {
 }
 
 /* Remove tap highlight on mobile */
-a, button {
+a,
+button {
   -webkit-tap-highlight-color: transparent;
 }
 
 /* Smooth image transitions */
 img {
-  transition: transform var(--transition-slow), opacity var(--transition-base);
+  transition:
+    transform var(--transition-slow),
+    opacity var(--transition-base);
 }
 
 /* ========================================
@@ -147,16 +152,20 @@ textarea:focus-visible {
    ======================================== */
 
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes slideUp {
-  from { 
+  from {
     opacity: 0;
     transform: translateY(20px);
   }
-  to { 
+  to {
     opacity: 1;
     transform: translateY(0);
   }
@@ -194,17 +203,25 @@ textarea:focus-visible {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
-  
+
   html {
     scroll-behavior: auto;
   }
 }
 
 /* Stagger animation delays */
-.delay-100 { animation-delay: 100ms; }
-.delay-200 { animation-delay: 200ms; }
-.delay-300 { animation-delay: 300ms; }
-.delay-400 { animation-delay: 400ms; }
+.delay-100 {
+  animation-delay: 100ms;
+}
+.delay-200 {
+  animation-delay: 200ms;
+}
+.delay-300 {
+  animation-delay: 300ms;
+}
+.delay-400 {
+  animation-delay: 400ms;
+}
 
 /* ========================================
    Responsive Typography Scale
@@ -226,7 +243,7 @@ textarea:focus-visible {
     padding-left: max(0px, env(safe-area-inset-left));
     padding-right: max(0px, env(safe-area-inset-right));
   }
-  
+
   /* Footer needs bottom safe area */
   footer {
     padding-bottom: max(2rem, env(safe-area-inset-bottom));
@@ -238,10 +255,18 @@ textarea:focus-visible {
    ======================================== */
 
 @media (min-width: 480px) {
-  .xs\:block { display: block; }
-  .xs\:hidden { display: none; }
-  .xs\:text-6xl { font-size: 3.75rem; }
-  .xs\:text-3xl { font-size: 1.875rem; }
+  .xs\:block {
+    display: block;
+  }
+  .xs\:hidden {
+    display: none;
+  }
+  .xs\:text-6xl {
+    font-size: 3.75rem;
+  }
+  .xs\:text-3xl {
+    font-size: 1.875rem;
+  }
 }
 
 /* ========================================
@@ -294,7 +319,7 @@ img[class*="h-full"] {
   .no-print {
     display: none !important;
   }
-  
+
   body {
     background: white;
     color: black;

@@ -1,0 +1,331 @@
+---
+import { Image } from "astro:assets";
+import type { ImageMetadata } from "astro";
+
+type ViewerImage = ImageMetadata | string;
+
+interface Props {
+  images: ViewerImage[];
+  projectTitle: string;
+  viewerId?: string;
+}
+
+const {
+  images = [],
+  projectTitle,
+  viewerId = `image-viewer-${Math.random().toString(36).slice(2, 10)}`,
+} = Astro.props;
+---
+
+{
+  images.length > 0 && (
+    <section
+      id={viewerId}
+      aria-label="Galería del proyecto"
+      class="bg-neutral-50 py-14 sm:py-20 md:py-24"
+    >
+      <div class="max-w-7xl mx-auto px-5 sm:px-6 md:px-12 lg:px-20">
+        <h2 class="text-xs sm:text-sm uppercase tracking-[0.2em] text-muted font-body mb-8 sm:mb-12">
+          Galería
+        </h2>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 md:gap-5">
+          {images.map((img, i) => (
+            <button
+              type="button"
+              data-viewer-open
+              data-index={i}
+              aria-label={`Abrir imagen ${i + 1} de ${images.length}`}
+              class:list={[
+                "group relative overflow-hidden text-left touch-manipulation",
+                "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2",
+                i === 0 && images.length > 2 ? "sm:col-span-2" : "",
+              ]}
+            >
+              <Image
+                src={img}
+                alt={`${projectTitle} — imagen ${i + 1}`}
+                width={1200}
+                height={800}
+                format="webp"
+                class="w-full object-cover transition-transform duration-700 group-hover:scale-105 group-focus-visible:scale-105"
+                style={i === 0 && images.length > 2 ? "aspect-ratio: 16/7;" : "aspect-ratio: 4/3;"}
+              />
+
+              <span
+                class="pointer-events-none absolute inset-0 bg-black/0 group-hover:bg-black/15 group-focus-visible:bg-black/15 transition-colors duration-300"
+                aria-hidden="true"
+              ></span>
+              <span
+                class="pointer-events-none absolute bottom-3 right-3 sm:bottom-4 sm:right-4 inline-flex items-center gap-1.5 bg-black/55 text-white text-[10px] sm:text-[11px] uppercase tracking-[0.12em] font-body px-2.5 py-1.5"
+                aria-hidden="true"
+              >
+                Ampliar
+                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="1.5"
+                    d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"
+                  ></path>
+                </svg>
+              </span>
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <div
+        data-viewer-modal
+        role="dialog"
+        aria-modal="true"
+        aria-label={`Visor de imágenes de ${projectTitle}`}
+        tabindex="-1"
+        class="fixed inset-0 z-[90] opacity-0 pointer-events-none transition-opacity duration-300"
+      >
+        <button
+          type="button"
+          data-viewer-close
+          aria-label="Cerrar visor de imágenes"
+          class="absolute inset-0 bg-black/90 backdrop-blur-[2px] cursor-zoom-out"
+        ></button>
+
+        <div class="relative z-10 flex h-full flex-col text-white">
+          <div class="flex items-center justify-between px-4 sm:px-6 md:px-10 pt-4 sm:pt-5">
+            <p
+              data-viewer-counter
+              class="text-[11px] sm:text-xs uppercase tracking-[0.18em] text-white/70 font-body"
+            >
+              1 / {images.length}
+            </p>
+
+            <button
+              type="button"
+              data-viewer-close
+              data-viewer-close-btn
+              aria-label="Cerrar visor"
+              class="inline-flex h-10 w-10 sm:h-11 sm:w-11 items-center justify-center border border-white/30 text-white hover:bg-white/10 transition-colors duration-300 touch-manipulation"
+            >
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="1.5"
+                  d="M6 18L18 6M6 6l12 12"
+                ></path>
+              </svg>
+            </button>
+          </div>
+
+          <div data-viewer-stage class="relative flex-1 min-h-0">
+            {images.map((img, i) => (
+              <figure
+                data-viewer-slide
+                data-index={i}
+                class:list={[
+                  "absolute inset-0 flex items-center justify-center px-4 pb-8 pt-3 sm:px-8 sm:pb-10 md:px-12",
+                  "transition-opacity duration-300",
+                  i === 0 ? "opacity-100" : "opacity-0 pointer-events-none",
+                ]}
+              >
+                <Image
+                  src={img}
+                  alt={`${projectTitle} — vista ampliada ${i + 1}`}
+                  width={2200}
+                  height={1600}
+                  format="webp"
+                  class="max-w-full max-h-full w-auto object-contain shadow-[0_15px_45px_rgba(0,0,0,0.45)]"
+                />
+              </figure>
+            ))}
+
+            {
+              images.length > 1 && (
+                <>
+                  <button
+                    type="button"
+                    data-viewer-prev
+                    aria-label="Ver imagen anterior"
+                    class="absolute left-2 sm:left-4 md:left-6 top-1/2 -translate-y-1/2 h-11 w-11 sm:h-12 sm:w-12 inline-flex items-center justify-center border border-white/30 text-white hover:bg-white/10 transition-colors duration-300 touch-manipulation"
+                  >
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="1.5"
+                        d="M15 19l-7-7 7-7"
+                      ></path>
+                    </svg>
+                  </button>
+
+                  <button
+                    type="button"
+                    data-viewer-next
+                    aria-label="Ver imagen siguiente"
+                    class="absolute right-2 sm:right-4 md:right-6 top-1/2 -translate-y-1/2 h-11 w-11 sm:h-12 sm:w-12 inline-flex items-center justify-center border border-white/30 text-white hover:bg-white/10 transition-colors duration-300 touch-manipulation"
+                  >
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="1.5"
+                        d="M9 5l7 7-7 7"
+                      ></path>
+                    </svg>
+                  </button>
+                </>
+              )
+            }
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+<script define:vars={{ viewerId }}>
+  function initImageViewer(rootId) {
+    const root = document.getElementById(rootId);
+    if (!root || root.dataset.viewerBound === "true") return;
+
+    root.dataset.viewerBound = "true";
+
+    const modal = root.querySelector("[data-viewer-modal]");
+    const stage = root.querySelector("[data-viewer-stage]");
+    const counter = root.querySelector("[data-viewer-counter]");
+    const openButtons = Array.from(root.querySelectorAll("[data-viewer-open]"));
+    const slides = Array.from(root.querySelectorAll("[data-viewer-slide]"));
+    const closeButtons = Array.from(root.querySelectorAll("[data-viewer-close]"));
+    const prevButton = root.querySelector("[data-viewer-prev]");
+    const nextButton = root.querySelector("[data-viewer-next]");
+    const closeButton = root.querySelector("[data-viewer-close-btn]");
+
+    if (!modal || !counter || openButtons.length === 0 || slides.length === 0) {
+      return;
+    }
+
+    const total = slides.length;
+    let currentIndex = 0;
+    let isOpen = false;
+    let previousBodyOverflow = "";
+    let previousFocusedElement = null;
+    let touchStartX = 0;
+    let touchStartY = 0;
+
+    const updateSlides = (nextIndex) => {
+      currentIndex = (nextIndex + total) % total;
+
+      slides.forEach((slide, index) => {
+        const active = index === currentIndex;
+        slide.classList.toggle("opacity-100", active);
+        slide.classList.toggle("opacity-0", !active);
+        slide.classList.toggle("pointer-events-none", !active);
+      });
+
+      counter.textContent = `${currentIndex + 1} / ${total}`;
+    };
+
+    const openViewer = (index) => {
+      updateSlides(index);
+
+      isOpen = true;
+      previousBodyOverflow = document.body.style.overflow;
+      document.body.style.overflow = "hidden";
+
+      previousFocusedElement =
+        document.activeElement instanceof HTMLElement ? document.activeElement : null;
+
+      modal.classList.remove("opacity-0", "pointer-events-none");
+      modal.classList.add("opacity-100", "pointer-events-auto");
+
+      if (closeButton instanceof HTMLElement) {
+        closeButton.focus();
+      }
+    };
+
+    const closeViewer = () => {
+      if (!isOpen) return;
+
+      isOpen = false;
+      modal.classList.add("opacity-0", "pointer-events-none");
+      modal.classList.remove("opacity-100", "pointer-events-auto");
+
+      document.body.style.overflow = previousBodyOverflow;
+
+      if (previousFocusedElement instanceof HTMLElement) {
+        previousFocusedElement.focus();
+      }
+    };
+
+    openButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        const index = Number(button.getAttribute("data-index") ?? "0");
+        openViewer(index);
+      });
+    });
+
+    closeButtons.forEach((button) => {
+      button.addEventListener("click", closeViewer);
+    });
+
+    prevButton?.addEventListener("click", () => updateSlides(currentIndex - 1));
+    nextButton?.addEventListener("click", () => updateSlides(currentIndex + 1));
+
+    modal.addEventListener("keydown", (event) => {
+      if (!isOpen) return;
+
+      if (event.key === "Escape") {
+        closeViewer();
+      }
+
+      if (event.key === "ArrowRight") {
+        updateSlides(currentIndex + 1);
+      }
+
+      if (event.key === "ArrowLeft") {
+        updateSlides(currentIndex - 1);
+      }
+    });
+
+    stage?.addEventListener(
+      "touchstart",
+      (event) => {
+        const touch = event.changedTouches[0];
+        if (!touch) return;
+
+        touchStartX = touch.clientX;
+        touchStartY = touch.clientY;
+      },
+      { passive: true }
+    );
+
+    stage?.addEventListener(
+      "touchend",
+      (event) => {
+        if (!isOpen) return;
+
+        const touch = event.changedTouches[0];
+        if (!touch) return;
+
+        const deltaX = touch.clientX - touchStartX;
+        const deltaY = touch.clientY - touchStartY;
+
+        if (Math.abs(deltaX) < 50 || Math.abs(deltaX) < Math.abs(deltaY)) {
+          return;
+        }
+
+        if (deltaX < 0) {
+          updateSlides(currentIndex + 1);
+        } else {
+          updateSlides(currentIndex - 1);
+        }
+      },
+      { passive: true }
+    );
+
+    updateSlides(0);
+  }
+
+  initImageViewer(viewerId);
+  document.addEventListener("astro:page-load", () => initImageViewer(viewerId));
+</script>
