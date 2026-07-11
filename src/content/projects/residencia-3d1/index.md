@@ -12,6 +12,11 @@ gallery:
   - ./resi-1.jpg
   - ./resi-3.png
   - ./resi-4.png
+  - ./resi-5.webp
+  - ./resi-6.webp
+  - ./resi-7.webp
+  - ./resi-8.webp
+  - ./resi-9.webp
 ---
 
 ## Visión arquitectónica
